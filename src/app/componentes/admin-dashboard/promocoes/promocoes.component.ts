@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ItemPromocaoModelMapper } from './mapper/item-promocao-model.mapper';
 import { PromocoesService } from './service/promocoes.service';
@@ -14,6 +14,7 @@ import { PromocoesService } from './service/promocoes.service';
 export class PromocoesComponent implements OnInit {
 
   public buscandoItensPromocoes: boolean = true;
+  public base64Output: any = null;
 
   public formGroupItens!: FormGroup;
   constructor(private httpClient: HttpClient,
@@ -36,8 +37,7 @@ export class PromocoesComponent implements OnInit {
             valor: new FormControl(item.valor, [Validators.required]),
             imagem: new FormControl(item.imagem, [Validators.required])
           });
-          control.controls.descricao.disable();
-          control.controls.valor.disable();
+          this.disableEdit(control);
           return control;
         })
       )
@@ -46,6 +46,19 @@ export class PromocoesComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  onFileSelected(event: any, itemForm: any) {
+    this.convertFile(event.target.files[0], itemForm);
+  }
+
+  convertFile(file: File, itemForm: any): void {
+    // const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      itemForm.controls.imagem.setValue(reader.result);
+    };
   }
 
   public enableEdit(itemForm: any): void {
@@ -78,7 +91,10 @@ export class PromocoesComponent implements OnInit {
       controls.valor.value);
 
     this.promocoesService.editarItem(itemPromocaoModel)
-      .subscribe(() => this.disableEdit(itemForm));
+      .subscribe(
+        () => this.disableEdit(itemForm),
+        (err: any) => console.log(`err ${err}`)
+      );
   }
   get itens() {
     return this.formGroupItens.controls["itens"] as FormArray;

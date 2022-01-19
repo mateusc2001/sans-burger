@@ -14,6 +14,7 @@
         <div class="container-list-promocoes" [formGroup]="formGroupItens">
 
             <div formArrayName="itens" style="width: 100%;">
+                
                 <div class="container-row" *ngFor="let itemForm of itens.controls; let i = index">
 
                     <div class="container-promocoes" style="background-image: url({{getImagem(itemForm)}})">
@@ -25,6 +26,7 @@
                         </div>
                     </div>
                     <div class="container-form-edit-promocao" [formGroupName]="i">
+                        <input type="file" (change)="onFileSelected($event, itemForm)"/>
                         <form class="example-form">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>Valor</mat-label>
@@ -41,11 +43,14 @@
                         </form>
                         <div
                             style="width: 100%; display: flex; justify-content: flex-end; padding: 10px; margin-top: 10px;">
-                            <button mat-raised-button color="warn" style="margin-right: 10px;" *>
+                            <!-- <button mat-raised-button color="warn" style="margin-right: 10px;" *ngIf="!editarAtivo(itemForm)">
                                 Remover
-                            </button>
+                            </button> -->
                             <button mat-raised-button color="primary" *ngIf="!editarAtivo(itemForm)" (click)="enableEdit(itemForm)">
                                 Editar
+                            </button>
+                            <button mat-stroked-button *ngIf="editarAtivo(itemForm)" color="primary" style="margin-right: 10px;" (click)="disableEdit(itemForm)">
+                                Cancelar
                             </button>
                             <button mat-raised-button color="primary" *ngIf="editarAtivo(itemForm)" (click)="salvar(itemForm)">
                                 Salvar
