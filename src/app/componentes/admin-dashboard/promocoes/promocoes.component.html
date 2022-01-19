@@ -29,7 +29,7 @@
                     <div class="container-form-edit-promocao" [formGroupName]="i">
                         <input type="file" class="file-input" style="display: none;" (change)="onFileSelected($event, itemForm)" #fileUpload>
                         <div class="file-upload" style="margin-bottom: 10px;">
-                            <button mat-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                            <button mat-fab color="primary" [disabled]="!editarAtivo(itemForm)" class="upload-btn" (click)="fileUpload.click()">
                                 <mat-icon>add_a_photo</mat-icon>
                             </button>
                         </div>
