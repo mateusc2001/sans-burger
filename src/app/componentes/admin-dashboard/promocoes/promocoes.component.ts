@@ -38,6 +38,7 @@ export class PromocoesComponent implements OnInit {
             imagem: new FormControl(item.imagem, [Validators.required])
           });
           this.disableEdit(control);
+          console.log(control.controls);
           return control;
         })
       )

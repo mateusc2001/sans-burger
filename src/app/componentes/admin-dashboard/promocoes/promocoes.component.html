@@ -14,7 +14,7 @@
         <div class="container-list-promocoes" [formGroup]="formGroupItens">
 
             <div formArrayName="itens" style="width: 100%;">
-                
+
                 <div class="container-row" *ngFor="let itemForm of itens.controls; let i = index">
 
                     <div class="container-promocoes" style="background-image: url({{getImagem(itemForm)}})">
@@ -22,11 +22,19 @@
                             <span style="color: rgb(247, 189, 43); font-size: 38px">Super</span>
                             <span
                                 style="color: white; font-size: 28px; font-weight: 300; margin: 15px 0;">{{getDescricaoForm(itemForm)}}</span>
-                            <span style="color: rgb(247, 189, 43); font-size: 25px;">{{getValorForm(itemForm) | currency:'BRL'}}</span>
+                            <span style="color: rgb(247, 189, 43); font-size: 25px;">{{getValorForm(itemForm) |
+                                currency:'BRL'}}</span>
                         </div>
                     </div>
                     <div class="container-form-edit-promocao" [formGroupName]="i">
-                        <input type="file" (change)="onFileSelected($event, itemForm)"/>
+                        <input type="file" class="file-input" style="display: none;" (change)="onFileSelected($event, itemForm)" #fileUpload>
+                        <div class="file-upload" style="margin-bottom: 10px;">
+                            <button mat-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                                <mat-icon>add_a_photo</mat-icon>
+                            </button>
+                        </div>
+                        <span style="color: gray; margin-bottom: 15px;">Selecione uma imagem</span>
+
                         <form class="example-form">
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>Valor</mat-label>
@@ -35,8 +43,8 @@
                             </mat-form-field>
                             <mat-form-field class="example-full-width" appearance="fill">
                                 <mat-label>Message</mat-label>
-                                <input matInput #message maxlength="30"
-                                formControlName="descricao" placeholder="Ex. I need help with...">
+                                <input matInput #message maxlength="30" formControlName="descricao"
+                                    placeholder="Ex. I need help with...">
                                 <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
                                 <mat-hint align="end">{{message.value.length}} / 30</mat-hint>
                             </mat-form-field>
@@ -46,13 +54,16 @@
                             <!-- <button mat-raised-button color="warn" style="margin-right: 10px;" *ngIf="!editarAtivo(itemForm)">
                                 Remover
                             </button> -->
-                            <button mat-raised-button color="primary" *ngIf="!editarAtivo(itemForm)" (click)="enableEdit(itemForm)">
+                            <button mat-raised-button color="primary" *ngIf="!editarAtivo(itemForm)"
+                                (click)="enableEdit(itemForm)">
                                 Editar
                             </button>
-                            <button mat-stroked-button *ngIf="editarAtivo(itemForm)" color="primary" style="margin-right: 10px;" (click)="disableEdit(itemForm)">
+                            <button mat-stroked-button *ngIf="editarAtivo(itemForm)" color="primary"
+                                style="margin-right: 10px;" (click)="disableEdit(itemForm)">
                                 Cancelar
                             </button>
-                            <button mat-raised-button color="primary" *ngIf="editarAtivo(itemForm)" (click)="salvar(itemForm)">
+                            <button mat-raised-button color="primary" *ngIf="editarAtivo(itemForm)"
+                                (click)="salvar(itemForm)">
                                 Salvar
                             </button>
                         </div>
