@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   public itensPromocoes: any;
+  public apiUrl: string = environment.apiURL;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
   title = 'sans-burger-front-end';
 
   public getItens(): void {
-    this.httpClient.get('https://calm-island-63289.herokuapp.com/itens')
+    this.httpClient.get(`${environment.apiURL}/itens`)
       .subscribe((res: any) => this.itensPromocoes = res);
   }
 

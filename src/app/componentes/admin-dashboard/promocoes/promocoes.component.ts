@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ItemPromocaoModelMapper } from './mapper/item-promocao-model.mapper';
 import { PromocoesService } from './service/promocoes.service';
 
@@ -18,7 +19,7 @@ export class PromocoesComponent implements OnInit {
   constructor(private httpClient: HttpClient,
     private promocoesService: PromocoesService) {
     this.buscandoItensPromocoes = true;
-    this.httpClient.get(`https://calm-island-63289.herokuapp.com/itens`)
+    this.httpClient.get(`${environment.apiURL}/itens`)
       .subscribe((res: any) => {
         this.buscandoItensPromocoes = false;
         this.formGroupItens = this.buildFormGroup(res);

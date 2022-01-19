@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ItemPromocaoRequestMapper } from '../mapper/item-promocao-request.mapper';
 import { ItemPromocaoModel } from '../model/item-promocao.model';
 
@@ -13,6 +14,6 @@ export class PromocoesService {
 
   public editarItem(itemPromocaoModel: ItemPromocaoModel): any {
     const request = ItemPromocaoRequestMapper.mapTo(itemPromocaoModel);
-    return this.httpClient.put('https://calm-island-63289.herokuapp.com/item/promocao', request);
+    return this.httpClient.put(`${environment.apiURL}/item/promocao`, request);
   }
 }
