@@ -35,7 +35,9 @@ export class PromocoesComponent implements OnInit {
             id: new FormControl(item.id, [Validators.required]),
             descricao: new FormControl(item.descricao, [Validators.required]),
             valor: new FormControl(item.valor, [Validators.required]),
-            imagem: new FormControl(item.imagem, [Validators.required])
+            imagem: new FormControl(item.imagem, [Validators.required]),
+            imagePositionY: new FormControl(0, [Validators.required]),
+            imagePositionX: new FormControl(0, [Validators.required])
           });
           this.disableEdit(control);
           console.log(control.controls);
@@ -60,6 +62,31 @@ export class PromocoesComponent implements OnInit {
     reader.onload = () => {
       itemForm.controls.imagem.setValue(reader.result);
     };
+  }
+
+  public clearPosition(itemForm: any): void {
+    itemForm.controls.imagePositionX.setValue(0);
+    itemForm.controls.imagePositionY.setValue(0);
+  }
+
+  public incrementPositionY(itemForm: any): void {
+    itemForm.controls.imagePositionY.setValue(itemForm.controls.imagePositionY.value + 1);
+  }
+
+  public incrementPositionX(itemForm: any): void {
+    itemForm.controls.imagePositionX.setValue(itemForm.controls.imagePositionX.value + 1);
+  }
+
+  public decrementPositionX(itemForm: any): void {
+    itemForm.controls.imagePositionX.setValue(itemForm.controls.imagePositionX.value - 1);
+  }
+
+  public decrementPositionY(itemForm: any): void {
+    itemForm.controls.imagePositionY.setValue(itemForm.controls.imagePositionY.value - 1);
+  }
+
+  public getPositionForm(itemForm: any): string {
+    return `${itemForm.controls.imagePositionX.value}px ${itemForm.controls.imagePositionY.value}px`;
   }
 
   public enableEdit(itemForm: any): void {

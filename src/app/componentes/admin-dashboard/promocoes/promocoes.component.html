@@ -17,7 +17,8 @@
 
                 <div class="container-row" *ngFor="let itemForm of itens.controls; let i = index">
 
-                    <div class="container-promocoes" style="background-image: url({{getImagem(itemForm)}})">
+                    <div class="container-promocoes" [style.background-position]="getPositionForm(itemForm)"
+                        style="background-image: url({{getImagem(itemForm)}})">
                         <div style="width: 30%; display: flex; flex-direction: column;">
                             <span style="color: rgb(247, 189, 43); font-size: 38px">Super</span>
                             <span
@@ -27,13 +28,39 @@
                         </div>
                     </div>
                     <div class="container-form-edit-promocao" [formGroupName]="i">
-                        <input type="file" class="file-input" style="display: none;" (change)="onFileSelected($event, itemForm)" #fileUpload>
-                        <div class="file-upload" style="margin-bottom: 10px;">
-                            <button mat-fab color="primary" [disabled]="!editarAtivo(itemForm)" class="upload-btn" (click)="fileUpload.click()">
-                                <mat-icon>add_a_photo</mat-icon>
-                            </button>
+                        <input type="file" class="file-input" style="display: none;"
+                            (change)="onFileSelected($event, itemForm)" #fileUpload>
+                        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <div class="file-upload" style="margin-bottom: 10px;">
+                                    <button mat-fab color="primary" [disabled]="!editarAtivo(itemForm)"
+                                        class="upload-btn" (click)="fileUpload.click()">
+                                        <mat-icon>add_a_photo</mat-icon>
+                                    </button>
+                                </div>
+                                <span style="color: gray; margin-bottom: 15px;">Selecione uma imagem</span>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="decrementPositionY(itemForm)">
+                                    <mat-icon>keyboard_arrow_up</mat-icon>
+                                </button>
+                                <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" style="margin-right: 0px;" (click)="decrementPositionX(itemForm)">
+                                        <mat-icon>keyboard_arrow_left</mat-icon>
+                                    </button>
+                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="clearPosition(itemForm)">
+                                        <mat-icon>clear</mat-icon>
+                                    </button>
+                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" style="margin-left: 0px;" (click)="incrementPositionX(itemForm)">
+                                        <mat-icon>keyboard_arrow_right</mat-icon>
+                                    </button>
+                                </div>
+                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="incrementPositionY(itemForm)">
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                </button>
+                            </div>
                         </div>
-                        <span style="color: gray; margin-bottom: 15px;">Selecione uma imagem</span>
 
                         <form class="example-form">
                             <mat-form-field class="example-full-width" appearance="fill">
