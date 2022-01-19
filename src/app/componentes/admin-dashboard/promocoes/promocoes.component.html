@@ -1,0 +1,59 @@
+<section
+    style="padding: 50px 100px; display: flex; justify-content: center; width: 100%; position: absolute; box-sizing: border-box;">
+    <div style="width: 100%; display: flex; justify-content: center;" *ngIf="buscandoItensPromocoes">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="container-principal" *ngIf="!buscandoItensPromocoes">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+            <h1 style="font-size: 30px; font-weight: 300;">Itens em promoção</h1>
+            <button mat-icon-button>
+                <mat-icon style="transform: scale(1.2);" *ngIf="itens.length < 3">add</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="container-list-promocoes" [formGroup]="formGroupItens">
+
+            <div formArrayName="itens" style="width: 100%;">
+                <div class="container-row" *ngFor="let itemForm of itens.controls; let i = index">
+
+                    <div class="container-promocoes" style="background-image: url({{getImagem(itemForm)}})">
+                        <div style="width: 30%; display: flex; flex-direction: column;">
+                            <span style="color: rgb(247, 189, 43); font-size: 38px">Super</span>
+                            <span
+                                style="color: white; font-size: 28px; font-weight: 300; margin: 15px 0;">{{getDescricaoForm(itemForm)}}</span>
+                            <span style="color: rgb(247, 189, 43); font-size: 25px;">{{getValorForm(itemForm) | currency:'BRL'}}</span>
+                        </div>
+                    </div>
+                    <div class="container-form-edit-promocao" [formGroupName]="i">
+                        <form class="example-form">
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Valor</mat-label>
+                                <input currencyMask matInput formControlName="valor"
+                                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width" appearance="fill">
+                                <mat-label>Message</mat-label>
+                                <input matInput #message maxlength="30"
+                                formControlName="descricao" placeholder="Ex. I need help with...">
+                                <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint>
+                                <mat-hint align="end">{{message.value.length}} / 30</mat-hint>
+                            </mat-form-field>
+                        </form>
+                        <div
+                            style="width: 100%; display: flex; justify-content: flex-end; padding: 10px; margin-top: 10px;">
+                            <button mat-raised-button color="warn" style="margin-right: 10px;" *>
+                                Remover
+                            </button>
+                            <button mat-raised-button color="primary" *ngIf="!editarAtivo(itemForm)" (click)="enableEdit(itemForm)">
+                                Editar
+                            </button>
+                            <button mat-raised-button color="primary" *ngIf="editarAtivo(itemForm)" (click)="salvar(itemForm)">
+                                Salvar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

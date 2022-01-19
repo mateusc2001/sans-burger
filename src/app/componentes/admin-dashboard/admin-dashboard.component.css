@@ -1,0 +1,8 @@
+.container-opcao {
+    cursor: pointer;
+    transition: .3s;
+}
+
+.container-opcao:hover {
+    transform: scale(1.1);
+}

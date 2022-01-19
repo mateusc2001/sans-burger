@@ -1,0 +1,89 @@
+.container-list-promocoes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.container-principal {
+    width: 100%;
+    /* width: 50%; */
+    /* background-color: red; */
+    transition: .2s;
+}
+
+@media screen and (min-width: 800px) {
+    .container-principal {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .container-principal {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .container-principal {
+        width: 50%;
+    }
+}
+
+.container-promocoes {
+    width: 45%;
+    height: 300px;
+    /* min-width: 500px; */
+    padding-left: 30px;
+    padding-top: 30px;
+    /* margin: 15px; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.container-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px -5px gray;
+    margin: 15px 0;
+    border-radius: 5px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.container-form-edit-promocao {
+    width: 65%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.example-button {
+    margin-top: 16px;
+}
+
+.icon-action-item-cardapio {
+    transform: scale(1.5);
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    height: 70%;
+}
+
+.example-full-width {
+    width: 100%;
+}
