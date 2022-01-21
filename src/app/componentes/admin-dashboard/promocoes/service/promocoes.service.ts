@@ -14,6 +14,6 @@ export class PromocoesService {
 
   public editarItem(itemPromocaoModel: ItemPromocaoModel): any {
     const request = ItemPromocaoRequestMapper.mapTo(itemPromocaoModel);
-    return this.httpClient.put(`${environment.apiURL}/item/promocao`, request);
+    return this.httpClient.put(`${environment.apiURL}/promocao/item/promocao`, request);
   }
 }

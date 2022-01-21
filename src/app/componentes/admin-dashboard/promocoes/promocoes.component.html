@@ -31,7 +31,8 @@
                         <input type="file" class="file-input" style="display: none;"
                             (change)="onFileSelected($event, itemForm)" #fileUpload>
                         <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <div class="file-upload" style="margin-bottom: 10px;">
                                     <button mat-fab color="primary" [disabled]="!editarAtivo(itemForm)"
                                         class="upload-btn" (click)="fileUpload.click()">
@@ -41,22 +42,29 @@
                                 <span style="color: gray; margin-bottom: 15px;">Selecione uma imagem</span>
                             </div>
 
-                            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="decrementPositionY(itemForm)">
+                            <div
+                                style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)"
+                                    (click)="decrementPositionY(itemForm)">
                                     <mat-icon>keyboard_arrow_up</mat-icon>
                                 </button>
                                 <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" style="margin-right: 0px;" (click)="decrementPositionX(itemForm)">
+                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)"
+                                        style="margin-right: 0px;" (click)="decrementPositionX(itemForm)">
                                         <mat-icon>keyboard_arrow_left</mat-icon>
                                     </button>
-                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="clearPosition(itemForm)">
+                                    <button mat-icon-button
+                                        [disabled]="!editarAtivo(itemForm) || (editarAtivo(itemForm) && !positionEdited(itemForm))"
+                                        (click)="clearPosition(itemForm)">
                                         <mat-icon>clear</mat-icon>
                                     </button>
-                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)" style="margin-left: 0px;" (click)="incrementPositionX(itemForm)">
+                                    <button mat-icon-button [disabled]="!editarAtivo(itemForm)"
+                                        style="margin-left: 0px;" (click)="incrementPositionX(itemForm)">
                                         <mat-icon>keyboard_arrow_right</mat-icon>
                                     </button>
                                 </div>
-                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)" (click)="incrementPositionY(itemForm)">
+                                <button mat-icon-button [disabled]="!editarAtivo(itemForm)"
+                                    (click)="incrementPositionY(itemForm)">
                                     <mat-icon>keyboard_arrow_down</mat-icon>
                                 </button>
                             </div>
@@ -86,7 +94,7 @@
                                 Editar
                             </button>
                             <button mat-stroked-button *ngIf="editarAtivo(itemForm)" color="primary"
-                                style="margin-right: 10px;" (click)="disableEdit(itemForm)">
+                                style="margin-right: 10px;" (click)="disableEdit(itemForm, true)">
                                 Cancelar
                             </button>
                             <button mat-raised-button color="primary" *ngIf="editarAtivo(itemForm)"

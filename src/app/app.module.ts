@@ -20,6 +20,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CurrencyMaskModule } from "ng2-currency-mask";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ModalCadastroItemCardapioComponent } from './componentes/admin-dashboard/cardapio/modais/modal-cadastro-item-cardapio/modal-cadastro-item-cardapio.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ModalConfirmacaoExclusaoComponent } from './componentes/admin-dashboard/cardapio/modais/modal-confirmacao-exclusao/modal-confirmacao-exclusao.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     HomeComponent,
     AdminDashboardComponent,
     PromocoesComponent,
-    CardapioComponent
+    CardapioComponent,
+    ModalCadastroItemCardapioComponent,
+    ModalConfirmacaoExclusaoComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +51,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatTooltipModule,
     CurrencyMaskModule,
     MatProgressSpinnerModule,
-    DragDropModule
+    DragDropModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

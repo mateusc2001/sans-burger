@@ -1,1 +1,52 @@
-<p>cardapio works!</p>
+<section
+    style="padding: 50px 100px; display: flex; justify-content: center; width: 100%; position: absolute; box-sizing: border-box;">
+    <div style="width: 100%; display: flex; justify-content: center;" *ngIf="buscandoItensPromocoes">
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="container-principal" *ngIf="!buscandoItensPromocoes">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
+            <h1 style="font-size: 30px; font-weight: 300;">Itens do cardápio</h1>
+            <button mat-icon-button (click)="openDialog()">
+                <mat-icon style="transform: scale(1.2);">add</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
+
+        <mat-grid-list cols="2" rowHeight="2:2">
+            <mat-grid-tile *ngFor="let item of itensCardapio" style="background-color: transparent; box-sizing: border-box;">
+                <div style="display: flex; flex-direction: column; width: 80%; height: 80%; border-radius: 5px; overflow: hidden;" class="box-shadow-linear">
+                    <div class="container-img-novidade" [style.background-position]="getPositionForm(item)"
+                        [style.background-image]="getImagem(item)"
+                        style="width: 100%; height: 70%; background-size: cover;">
+                    </div>
+                    <div class="container-description-novidade" style="height: 30%; padding: 0 10px; box-sizing: border-box;">
+                        <div
+                            style="display: flex; justify-content: space-around; align-items: center; width: 100%; height: 60%;">
+                            <span style="font-size: 25px; font-weight: 400;">{{item.descricao}}</span>
+                            <span style="font-size: 25px; font-weight: 400; color: rgb(247, 189, 43);">{{item.valor |
+                                currency:
+                                'BRL'}}</span>
+                        </div>
+                        <div
+                            style="font-size: 20px; font-weight: 400; color: gray; display: flex; justify-content: center; align-items: center;  width: 100%; height: 50%;">
+                            {{item.complemento}}
+                        </div>
+                    </div>
+                    <div
+                        style="width: 100%; display: flex; justify-content: flex-end; padding: 10px; margin-top: 10px;">
+                        <button mat-stroked-button color="warn" (click)="openDialogConfirmarExclusao(item.id)"
+                            style="margin-right: 10px;">
+                            Remover
+                        </button>
+                        <button mat-raised-button color="primary" style="margin-right: 25px;" (click)="openDialog(item)">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+            </mat-grid-tile>
+
+
+        </mat-grid-list>
+
+    </div>
+</section>

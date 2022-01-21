@@ -14,16 +14,18 @@ import { PromocoesService } from './service/promocoes.service';
 export class PromocoesComponent implements OnInit {
 
   public buscandoItensPromocoes: boolean = true;
+  public itensSalvos: any;
   public base64Output: any = null;
 
   public formGroupItens!: FormGroup;
   constructor(private httpClient: HttpClient,
     private promocoesService: PromocoesService) {
     this.buscandoItensPromocoes = true;
-    this.httpClient.get(`${environment.apiURL}/itens`)
+    this.httpClient.get(`${environment.apiURL}/promocao/itens`)
       .subscribe((res: any) => {
         this.buscandoItensPromocoes = false;
         this.formGroupItens = this.buildFormGroup(res);
+        this.itensSalvos = res;
       });
   }
 
@@ -36,11 +38,10 @@ export class PromocoesComponent implements OnInit {
             descricao: new FormControl(item.descricao, [Validators.required]),
             valor: new FormControl(item.valor, [Validators.required]),
             imagem: new FormControl(item.imagem, [Validators.required]),
-            imagePositionY: new FormControl(0, [Validators.required]),
-            imagePositionX: new FormControl(0, [Validators.required])
+            imagePositionY: new FormControl(item.positionImage.y, [Validators.required]),
+            imagePositionX: new FormControl(item.positionImage.x, [Validators.required])
           });
           this.disableEdit(control);
-          console.log(control.controls);
           return control;
         })
       )
@@ -69,6 +70,12 @@ export class PromocoesComponent implements OnInit {
     itemForm.controls.imagePositionY.setValue(0);
   }
 
+  public positionEdited(itemForm: any): boolean {
+    const response = itemForm.controls.imagePositionX.value != 0 ||
+    itemForm.controls.imagePositionY.value != 0;
+    return response;
+  }
+
   public incrementPositionY(itemForm: any): void {
     itemForm.controls.imagePositionY.setValue(itemForm.controls.imagePositionY.value + 1);
   }
@@ -94,9 +101,17 @@ export class PromocoesComponent implements OnInit {
     itemForm.controls.valor.enable();
   }
 
-  public disableEdit(itemForm: any): void {
+  public disableEdit(itemForm: any, zerarForm: boolean = false): void {
     itemForm.controls.descricao.disable();
     itemForm.controls.valor.disable();
+    if (zerarForm) {
+      const item = this.itensSalvos.find((item: any) => item.id == itemForm.controls.id.value);
+      itemForm.controls.descricao.setValue(item.descricao);
+      itemForm.controls.valor.setValue(item.valor);
+      itemForm.controls.imagem.setValue(item.imagem);
+      itemForm.controls.imagePositionY.setValue(item.positionImage.y);
+      itemForm.controls.imagePositionX.setValue(item.positionImage.x);
+    }
   }
 
   public editarAtivo(itemForm: any): boolean {
@@ -116,7 +131,9 @@ export class PromocoesComponent implements OnInit {
     const itemPromocaoModel = ItemPromocaoModelMapper.buildItemPromocaoModel(controls.id.value,
       controls.imagem.value,
       controls.descricao.value,
-      controls.valor.value);
+      controls.valor.value,
+      controls.imagePositionX.value,
+      controls.imagePositionY.value);
 
     this.promocoesService.editarItem(itemPromocaoModel)
       .subscribe(
@@ -124,6 +141,7 @@ export class PromocoesComponent implements OnInit {
         (err: any) => console.log(`err ${err}`)
       );
   }
+  
   get itens() {
     return this.formGroupItens.controls["itens"] as FormArray;
   }

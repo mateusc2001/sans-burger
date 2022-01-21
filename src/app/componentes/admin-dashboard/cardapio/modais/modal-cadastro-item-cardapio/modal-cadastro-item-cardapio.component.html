@@ -1,0 +1,65 @@
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <input type="file" class="file-input" style="display: none;" (change)="onFileSelected($event, formNovoItem)"
+        #fileUpload>
+    <div class="file-upload" style="margin-bottom: 10px;">
+        <button mat-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+            <mat-icon>add_a_photo</mat-icon>
+        </button>
+    </div>
+    <span style="color: gray; margin-bottom: 15px;">Selecione uma imagem</span>
+
+    <div [style.background-image]="getImagem(formNovoItem)"
+        [style.background-position]="getPosition(formNovoItem)"
+         *ngIf="!!getImagem(formNovoItem)"
+        style="width: 400px; height: 200px; background-size: cover; border-radius: 10px; display: flex; align-items: center; justify-content: flex-start;">
+
+        <div class="container-btn-config-position-image" style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-around; padding-left: 10px;">
+            <button mat-mini-fab color="primary" (click)="decrementPositionY(formNovoItem)">
+                <mat-icon color="accent">keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" (click)="incrementPositionY(formNovoItem)">
+                <mat-icon color="accent">keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" style="margin-right: 0px;"
+                (click)="decrementPositionX(formNovoItem)">
+                <mat-icon color="accent">keyboard_arrow_left</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" style="margin-left: 0px;"
+                (click)="incrementPositionX(formNovoItem)">
+                <mat-icon color="accent">keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <form class="example-form" [formGroup]="formNovoItem">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Valor</mat-label>
+            <input currencyMask matInput formControlName="valor"
+                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Descrição</mat-label>
+            <input matInput formControlName="descricao" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Descrição detalhada</mat-label>
+            <input matInput #message maxlength="50" formControlName="complemento" autocomplete="off">
+            <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
+            <mat-hint align="end">{{message.value.length}} / 50</mat-hint>
+        </mat-form-field>
+
+    </form>
+
+    <mat-divider></mat-divider>
+    <div style="width: 100%; display: flex; justify-content: flex-end; padding: 10px; margin-top: 10px;">
+        <button mat-stroked-button style="margin-right: 10px;" mat-dialog-close>
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" [disabled]="formNovoItem.invalid" [mat-dialog-close]="onSave()">
+            <span *ngIf="modoEdicao">Editar</span>
+            <span *ngIf="!modoEdicao">Salvar</span>
+        </button>
+    </div>
+</div>

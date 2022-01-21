@@ -10,6 +10,7 @@ export class ItemPromocaoRequestMapper {
             .valor(itemPromocaoModel.valor)
             .imagem(itemPromocaoModel.imagem)
             .descricao(itemPromocaoModel.descricao)
+            .positionImage(itemPromocaoModel.positionImageModel)
             .build();
     }
 }
